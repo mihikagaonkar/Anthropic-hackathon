@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DocuBuddy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <h1>DocuBuddy</h1>
+  <form id="textForm">
+    <textarea id="inputText" name="inputText" placeholder="Paste your text here..." required></textarea>
+    
+    <label for="fileInput">Or upload a text file:</label>
+    <input type="file" id="fileInput" accept=".txt,.pdf" />
+    
+    <label for="readingLevel">Reading Level:</label>
+    <select id="readingLevel" name="readingLevel">
+      <option value="3rd grade">3rd grade</option>
+      <option value="5th grade" selected>5th grade</option>
+      <option value="8th grade">8th grade</option>
+      <option value="Plain English">Plain English</option>
+    </select>
+
+    <button type="submit">Simplify</button>
+  </form>
+
+  <h2>Result:</h2>
+  <div id="outputText"></div>
+
+  <div id="translateControls">
+    <label for="lang">Translate to:</label>
+    <select id="lang">
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <option value="hi">Hindi</option>
+    </select>
+    <button onclick="translateText()">Translate</button>
+  </div>
+
+  <button onclick="speakText()">🔊 Read Aloud</button>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
