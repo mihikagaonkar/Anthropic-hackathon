@@ -20,11 +20,36 @@ document.getElementById("textForm").addEventListener("submit", async function(e)
     if (e.target.files[0]) reader.readAsText(e.target.files[0]);
   });
   
+  let isSpeaking = false;
+  let utterance;
+  
   function speakText() {
-    const text = document.getElementById("outputText").innerText;
-    const msg = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(msg);
+    const output = document.getElementById("outputText").textContent.trim();
+    const speakButton = document.querySelector("button[onclick='speakText()']");
+  
+    if (!output) return;
+  
+    // If already speaking, stop it
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      speakButton.textContent = "🔊 Read Aloud";
+      return;
+    }
+  
+    // Start speaking
+    utterance = new SpeechSynthesisUtterance(output);
+    isSpeaking = true;
+    speakButton.textContent = "⏹️ Stop";
+  
+    utterance.onend = () => {
+      isSpeaking = false;
+      speakButton.textContent = "🔊 Read Aloud";
+    };
+  
+    speechSynthesis.speak(utterance);
   }
+  
   
   async function translateText() {
     const text = document.getElementById("outputText").innerText;
